@@ -1,0 +1,25 @@
+name: CMake
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Create Build Environment
+      run: cmake -S . -B build
+
+    - name: Build
+      working-directory: ${{github.workspace}}
+      shell: bash
+      # Execute the build.
+      run: cmake --build build
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      # Execute tests defined by the CMake configuration.  
+      run: ctest
