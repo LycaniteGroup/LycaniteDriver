@@ -1,3 +1,7 @@
+# Code editor
+.vscode
+*/.vs/*
+
 # Prerequisites
 *.d
 
