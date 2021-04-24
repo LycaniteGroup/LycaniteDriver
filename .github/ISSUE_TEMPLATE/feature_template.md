@@ -9,9 +9,8 @@ assignees: ''
 
 ## User story
 
-| As | I want | 
-|:---:|:-----:|
-| <!--- e.g lambda user --> | <!--- e.g know lycanite --> |
+As: <!--- e.g lambda user -->
+I Want: <!--- e.g know lycanite -->
 
 ## Description
 
@@ -25,6 +24,5 @@ assignees: ''
 
 ----
 
-| Working Days    | Working People |
-|:---------------:|:--------------:|
-| 0               | 0              |
+Working Days: 0
+Working People: 0
