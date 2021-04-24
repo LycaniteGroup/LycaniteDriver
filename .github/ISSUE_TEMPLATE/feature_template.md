@@ -10,7 +10,7 @@ assignees: ''
 ## User story
 
 As: <!--- e.g lambda user -->
-I Want: <!--- e.g know lycanite -->
+I want: <!--- e.g know lycanite -->
 
 ## Description
 
