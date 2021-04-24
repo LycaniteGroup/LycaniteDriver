@@ -19,7 +19,12 @@ assignees: ''
 
 ## Definition of done
 
+- [ ] Feature 1
+- [ ] Feature 2
+- [ ] Feature 3
+
 ----
 
-|Estimation (J/H) |0|
-|-|-|
+| Working Days    | Working People |
+|:---------------:|:--------------:|
+| 0               | 0              |
