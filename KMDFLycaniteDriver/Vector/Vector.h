@@ -44,7 +44,9 @@ class Vector {
             }
         }
 
-        ~Vector() {}
+        ~Vector() {
+            delete elems;
+        }
 
         void assign(const size_type _count, const type &value) {
             size_type n;
@@ -163,6 +165,129 @@ class Vector {
         }
 
         /***** Modifiers *****/
+
+        void clear() {
+            erase(begin(), end());
+        }
+
+        iterator erase(iterator pos) {
+            pos->~type();
+            count -= 1;
+            return pos++;
+        }
+
+        iterator erase(iterator first, iterator last) {
+            for (iterator i = first; i != last; i++) {
+                i->~type();
+            }
+            count = 0;
+            return end();
+        }
+
+        template< class... Args >
+        iterator emplace(iterator pos, Args&&... args) {
+            const size_type pos_index = (pos.get() - elems);
+            const size_type copy_size = (size() - (pos_index + 1)) * sizeof(type);
+
+            std::cout << "pos_index: " << pos_index << std::endl;
+            if (capacity() / size() <= 1) {
+                memsize *= 2;
+                type *newElems = new type[memsize];
+                memcpy(newElems, elems, count * sizeof(type));
+                delete elems;
+                elems = newElems;
+            }
+            memmove(&elems[pos_index + 2], &elems[pos_index + 1], copy_size);
+            elems[pos_index + 1] = type(std::forward<Args>(args)...);
+            count += 1;
+            return iterator(data() + pos_index + 1);
+        }
+
+        template< class... Args >
+        iterator emplace_back(Args&&... args) {
+            if (capacity() / size() <= 1) {
+                memsize *= 2;
+                type *newElems = new type[memsize];
+                memcpy(newElems, elems, count * sizeof(type));
+                delete elems;
+                elems = newElems;
+            }
+            elems[count] = type(std::forward<Args>(args)...);
+            count += 1;
+        }
+
+        iterator push_back(const type &value) {
+            if (capacity() / size() <= 1) {
+                memsize *= 2;
+                type *newElems = new type[memsize];
+                memcpy(newElems, elems, count * sizeof(type));
+                delete elems;
+                elems = newElems;
+            }
+            elems[count] = type(value);
+            count += 1;
+        }
+
+        iterator push_back(type &&value) {
+            if (capacity() / size() <= 1) {
+                memsize *= 2;
+                type *newElems = new type[memsize];
+                memcpy(newElems, elems, count * sizeof(type));
+                delete elems;
+                elems = newElems;
+            }
+            elems[count] = type(value);
+            count += 1;
+        }
+
+        void pop_back() {
+            if (size() > 0) {
+                elems[count - 1].~type();
+                count -= 1;
+            }
+        }
+
+        void resize(size_type _count) {
+            if (size() > _count) {
+                std::cout << "HEEEEEEEEEEERE" << std::endl;
+                for (size_type i = _count - 1; i < size(); i++) {
+                    elems[i].~type();
+                }
+            } else if (size() < _count) {
+                if (capacity() < _count) {
+                    memsize = _count * 2;
+                    type *newElems = new type[memsize];
+                    memcpy(newElems, elems, count * sizeof(type));
+                    delete elems;
+                    elems = newElems;
+                }
+                for (size_type i = size() - 1; i < _count; i++) {
+                    elems[i] = type();
+                }
+            }
+            count = _count;
+        }
+
+        void resize(size_type _count, const type &value) {
+            if (size() > _count) {
+                std::cout << "HEEEEEEEEEEERE" << std::endl;
+                for (size_type i = _count - 1; i < size(); i++) {
+                    elems[i].~type();
+                }
+            } else if (size() < _count) {
+                if (capacity() < _count) {
+                    memsize = _count * 2;
+                    type *newElems = new type[memsize];
+                    memcpy(newElems, elems, count * sizeof(type));
+                    delete elems;
+                    elems = newElems;
+                }
+                for (size_type i = size() - 1; i < _count; i++) {
+                    elems[i] = value;
+                }
+            }
+            count = _count;
+        }
 
     private:
 

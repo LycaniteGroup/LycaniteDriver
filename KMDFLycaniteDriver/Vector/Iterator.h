@@ -17,6 +17,7 @@ class iter {
         T *operator->() { return ptr_; }
         bool operator==(const iter& rhs) { return ptr_ == rhs.ptr_; }
         bool operator!=(const iter& rhs) { return ptr_ != rhs.ptr_; }
+        T *get() { return ptr_; }
     protected:
         T *ptr_;
 };
@@ -31,6 +32,7 @@ class const_iter {
         const T *operator->() { return ptr_; }
         bool operator==(const const_iter& rhs) { return ptr_ == rhs.ptr_; }
         bool operator!=(const const_iter& rhs) { return ptr_ != rhs.ptr_; }
+        T *get() { return ptr_; }
     protected:
         T *ptr_;
 };
